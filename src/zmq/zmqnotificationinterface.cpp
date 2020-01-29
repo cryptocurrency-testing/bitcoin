@@ -179,6 +179,8 @@ void CZMQNotificationInterface::TransactionAddedToMempool(const CTransactionRef&
 
 void CZMQNotificationInterface::BlockConnected(const std::shared_ptr<const CBlock>& pblock, const CBlockIndex* pindexConnected)
 {
+    if (gArgs.IsArgSet("-zmqrawtxonlymempool"))
+        return;
     for (const CTransactionRef& ptx : pblock->vtx) {
         // Do a normal notify for each transaction added in the block
         TransactionAddedToMempool(ptx);
@@ -187,6 +189,8 @@ void CZMQNotificationInterface::BlockConnected(const std::shared_ptr<const CBloc
 
 void CZMQNotificationInterface::BlockDisconnected(const std::shared_ptr<const CBlock>& pblock, const CBlockIndex* pindexDisconnected)
 {
+    if (gArgs.IsArgSet("-zmqrawtxonlymempool"))
+        return;
     for (const CTransactionRef& ptx : pblock->vtx) {
         // Do a normal notify for each transaction removed in block disconnection
         TransactionAddedToMempool(ptx);
