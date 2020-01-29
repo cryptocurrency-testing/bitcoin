@@ -160,6 +160,8 @@ void CZMQNotificationInterface::TransactionRemovedFromMempool(const CTransaction
 
 void CZMQNotificationInterface::BlockConnected(const std::shared_ptr<const CBlock>& pblock, const CBlockIndex* pindexConnected)
 {
+    if (gArgs.IsArgSet("-zmqrawtxonlymempool"))
+        return;
     for (const CTransactionRef& ptx : pblock->vtx) {
         const CTransaction& tx = *ptx;
         TryForEachAndRemoveFailed(notifiers, [&tx](CZMQAbstractNotifier* notifier) {
@@ -175,6 +177,8 @@ void CZMQNotificationInterface::BlockConnected(const std::shared_ptr<const CBloc
 
 void CZMQNotificationInterface::BlockDisconnected(const std::shared_ptr<const CBlock>& pblock, const CBlockIndex* pindexDisconnected)
 {
+    if (gArgs.IsArgSet("-zmqrawtxonlymempool"))
+        return;
     for (const CTransactionRef& ptx : pblock->vtx) {
         const CTransaction& tx = *ptx;
         TryForEachAndRemoveFailed(notifiers, [&tx](CZMQAbstractNotifier* notifier) {

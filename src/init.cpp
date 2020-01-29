@@ -500,6 +500,7 @@ void SetupServerArgs(NodeContext& node)
     argsman.AddArg("-zmqpubrawblockhwm=<n>", strprintf("Set publish raw block outbound message high water mark (default: %d)", CZMQAbstractNotifier::DEFAULT_ZMQ_SNDHWM), ArgsManager::ALLOW_ANY, OptionsCategory::ZMQ);
     argsman.AddArg("-zmqpubrawtxhwm=<n>", strprintf("Set publish raw transaction outbound message high water mark (default: %d)", CZMQAbstractNotifier::DEFAULT_ZMQ_SNDHWM), ArgsManager::ALLOW_ANY, OptionsCategory::ZMQ);
     argsman.AddArg("-zmqpubsequencehwm=<n>", strprintf("Set publish hash sequence message high water mark (default: %d)", CZMQAbstractNotifier::DEFAULT_ZMQ_SNDHWM), ArgsManager::ALLOW_ANY, OptionsCategory::ZMQ);
+    argsman.AddArg("-zmqrawtxonlymempool", strprintf("Disable transaction notification for BlockConnect and BlockDisconnect signals"), ArgsManager::ALLOW_ANY, OptionsCategory::ZMQ);
 #else
     hidden_args.emplace_back("-zmqpubhashblock=<address>");
     hidden_args.emplace_back("-zmqpubhashtx=<address>");
@@ -511,6 +512,7 @@ void SetupServerArgs(NodeContext& node)
     hidden_args.emplace_back("-zmqpubrawblockhwm=<n>");
     hidden_args.emplace_back("-zmqpubrawtxhwm=<n>");
     hidden_args.emplace_back("-zmqpubsequencehwm=<n>");
+    hidden_args.emplace_back("-zmqrawtxonlymempool");
 #endif
 
     argsman.AddArg("-checkblocks=<n>", strprintf("How many blocks to check at startup (default: %u, 0 = all)", DEFAULT_CHECKBLOCKS), ArgsManager::ALLOW_ANY | ArgsManager::DEBUG_ONLY, OptionsCategory::DEBUG_TEST);
